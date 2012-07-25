@@ -1,6 +1,7 @@
 ircBot v2
 =========
 IRCBot is a basic bot I coded in PHP made for CLI use. It supports plugins, but can only join one channel at a time.
+**WARNING: THIS BOT IS BUGGY**
 
 Plugins
 -------
