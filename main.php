@@ -37,7 +37,8 @@ while(1) {
 				$sender = explode("!", $data);
 				$sender = substr($sender[0], 1);
 			}
-			$message = $message[1];
+			array_shift($message);
+			$message = implode(" ", $message);
 			foreach ($loadedPlugins as &$loadedPlugin) {
 				$loadedPlugin->onSpeak($sender, $message, $data, $connection, $config);
 			}
