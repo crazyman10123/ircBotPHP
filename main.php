@@ -28,10 +28,10 @@ while(1) {
 		}
 		
 		// Check for speaking
-		if ((strstr($data, " PRIVMSG ".$channel) || strstr($data, " PRIVMSG ".$nick))) {
+		if ((strstr($data, " PRIVMSG ".$config->channel) || strstr($data, " PRIVMSG ".$config->nick))) {
 			$split_data = explode(" PRIVMSG ", $data);
 			$message = str_replace(array(chr(10), chr(13)), '', $split_data[1]);
-			$message = explode($channel." :", $message);
+			$message = explode($config->channel." :", $message);
 			$sender = $message[0];
 			if ($sender == $config->nick) {
 				$sender = explode("!", $data);
