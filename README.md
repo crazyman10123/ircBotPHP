@@ -36,7 +36,7 @@ The bot has the following default commands.
 * *plugins* - Lists currently loaded plugins
 * *Botname: #channel* - Instructs the bot to change channels
 * *cp <prefix>* - Instructs the bot to change prefix
-
+* *Botname: prefix* - Asks the bot what it's prefix is
 **Please also note** that all of these commands work in PM, so if you lose the bot (it joins a non-existant channel), you can instruct it to move to a known channel.
 
 
