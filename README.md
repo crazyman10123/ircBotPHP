@@ -11,9 +11,10 @@ Usage
 This bot requires a CLI installation of PHP. It is reccomended to run this bot on a *nix based OS, as this allows you to run PHP in the command line easily. I will not put a tutorial up on how to use this bot in Windows. You will just have to google "Windows CLI PHP" and hope for the best :)
 
 **Starting the bot**
+
 *Ensure your current directory is that of the bot (has config.php, main.php etc)*
 
-> $ php main.php
+> php main.php
 
 This should start the bot.
 
