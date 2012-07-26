@@ -36,15 +36,15 @@ class defaultCommands implements iPlugin
 					}
 				}
 				break;
-				case $config->nick.":#":
-					if ($user == $config->owner) {
-						if (empty($parameters)) {
-							$connection->sendMessage($sender, "What do you think I am, stupid?");
-						} else {
-							$connection->changeChannel($parameters, $config);
-						}
+			case $config->nick.":#":
+				if ($user == $config->owner) {
+					if (empty($parameters)) {
+						$connection->sendMessage($sender, "What do you think I am, stupid?");
+					} else {
+						$connection->changeChannel($parameters, $config);
 					}
-					break;
+				}
+				break;
 			case $config->prefix."cp":
 				if ($user == $config->owner) {
 					if (empty($parameters[0])) {
