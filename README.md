@@ -1,2 +1,2 @@
-ircBot v3
-=========
+ircBot v3 - Coming soon!
+========================
