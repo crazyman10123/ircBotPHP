@@ -1,7 +1,23 @@
 ircBot v2
 =========
 IRCBot is a basic bot I coded in PHP made for CLI use. It supports plugins, but can only join one channel at a time.
+
 **WARNING: THIS BOT IS BUGGY**
+
+When running commands, you will need to use the prefix defined in **config.php** or using the command **-cp**.
+
+Usage
+-----
+This bot requires a CLI installation of PHP. It is reccomended to run this bot on a *nix based OS, as this allows you to run PHP in the command line easily. I will not put a tutorial up on how to use this bot in Windows. You will just have to google "Windows CLI PHP" and hope for the best :)
+
+**Starting the bot**
+*Ensure your current directory is that of the bot (has config.php, main.php etc)*
+
+> $ php main.php
+
+This should start the bot.
+
+If you experience any errors, please don't hesistate to use the **issues** page located here: https://github.com/jackwilsdon/ircBot/issues
 
 Plugins
 -------
@@ -19,8 +35,6 @@ The bot has the following default commands.
 * *plugins* - Lists currently loaded plugins
 * *Botname: #channel* - Instructs the bot to change channels
 * *cp <prefix>* - Instructs the bot to change prefix
-
-**Please note** that all of these commands require the prefix defined in either config.php, or using cp <prefix>
 
 **Please also note** that all of these commands work in PM, so if you lose the bot (it joins a non-existant channel), you can instruct it to move to a known channel.
 
@@ -40,3 +54,11 @@ This plugin just shortens web URLs to around 10 characters. This can be useful i
 
 **Command Reference**
 * *shorten <url>* - Shortens a URL using goo.gl's shortening service.
+
+isup
+----
+*Checks whether a url is online*
+There isn't much to say about this plugin, you just run the command and pass it a domain, and it will tell you if the site is online or not.
+
+**Command Reference**
+* *isup <url* - Returns whether a URL is online or offline.
