@@ -62,4 +62,4 @@ isup
 There isn't much to say about this plugin, you just run the command and pass it a domain, and it will tell you if the site is online or not.
 
 **Command Reference**
-* *isup <url* - Returns whether a URL is online or offline.
+* *isup <url>* - Returns whether a URL is online or offline.
