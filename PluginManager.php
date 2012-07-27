@@ -13,8 +13,8 @@ class PluginManager
 	function PluginManager($plugins, $config) {
 		foreach ($plugins as &$plugin) {
 			echo "Loading plugin '".$plugin."'...\n";
-			if (file_exists("plugins/".$plugin.".php")) {
-				include("plugins/".$plugin.".php");
+			if (file_exists("Plugins/".$plugin.".php")) {
+				include("Plugins/".$plugin.".php");
 				$this->loadPlugin(new $plugin(), $config);
 			} else {
 				echo "Unable to load '".$plugin."'!\nFile does not exist!\n";
