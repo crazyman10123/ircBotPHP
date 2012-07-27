@@ -1,6 +1,7 @@
 <?PHP
 class lmgtfy implements iPlugin
 {	
+
 	public function onLoad() {
 	}
 

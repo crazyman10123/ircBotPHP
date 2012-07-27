@@ -1,8 +1,8 @@
-ircBot v2
+ircBot v2.0
 =========
 IRCBot is a basic bot I coded in PHP made for CLI use. It supports plugins, but can only join one channel at a time.
 
-**WARNING: THIS BOT IS BUGGY**
+**WARNING: THIS IS THE UNSTABLE BRANCH. THIS CODE MAY NOT FUNCTION HOW IT'S MEANT TO**
 
 When running commands, you will need to use the prefix defined in **config.php** or using the command **-cp**.
 
@@ -34,9 +34,8 @@ The bot has the following default commands.
 * *reload* - Reloads the bots plugins (currently doesn't do anything)
 * *bye* - Shuts down bot
 * *plugins* - Lists currently loaded plugins
-* *Botname: #channel* - Instructs the bot to change channels
+* *cc <channel>* - Instructs the bot to change channels
 * *cp <prefix>* - Instructs the bot to change prefix
-* *Botname: prefix* - Asks the bot what it's prefix is
 **Please also note** that all of these commands work in PM, so if you lose the bot (it joins a non-existant channel), you can instruct it to move to a known channel.
 
 
@@ -63,3 +62,21 @@ There isn't much to say about this plugin, you just run the command and pass it 
 
 **Command Reference**
 * *isup <url>* - Returns whether a URL is online or offline.
+
+uptime
+------
+*Shows the bot's current uptime*
+* *uptime* - Returns the bot's current uptime in hours, minutes and seconds.
+
+Changelog
+---------
+*I probably won't update these*
+* Removed some unused configuration options
+* Added config validation
+* Added registration detection, if username is registered, bot exits
+
+Planned
+-------
+* Registration username and password
+* Statistics
+* More plugin API documentation

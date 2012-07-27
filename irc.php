@@ -7,9 +7,8 @@ class IRC
 	function IRC($server, $nick, $channel) {
 		global $connection;
 		$connection = fsockopen($server, 6667);
+                fputs($connection,"NICK ".$nick."\r\n");
 		fputs($connection,"USER ".$nick." * * :".$nick."\r\n");
-		fputs($connection,"NICK ".$nick."\r\n");
-		fputs($connection,"JOIN ".$channel."\r\n");
 		$this->connection = $connection;
 	}
 	
@@ -31,6 +30,12 @@ class IRC
 		fputs($connection->connection,"JOIN ".$channel."\r\n");
 		$config->channel = $channel;
 	}
+
+	function runCommand($command) {
+		global $connection;
+		fputs($connection->connection, $command."\r\n");
+	}
+	
 
 }
 
