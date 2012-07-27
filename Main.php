@@ -131,14 +131,14 @@ while (!$exit) {
 			array_shift($message_split);
 			$parameters = implode(" ", $message_split);
 			$data = array($irc, $data);
-			$command = array($command, $parameters);
-			if ($message[0] == $config->prefix) {
-				foreach ($pluginManager->loadedPlugins as &$loadedPlugin) {
-					if (method_exists($loadedPlugin, "onSpeak")) {
-						$loadedPlugin->onSpeak($sender, $command, $data, $config);
-					}
-					$pluginCommands = explode(",", $loadedPlugin->commands);
-					foreach ($pluginCommands as &$pluginCommand) {
+			$command = array($command, $parameters, $message);
+			foreach ($pluginManager->loadedPlugins as &$loadedPlugin) {
+				if (method_exists($loadedPlugin, "onSpeak")) {
+					$loadedPlugin->onSpeak($sender, $command, $data, $config);
+				}
+				$pluginCommands = explode(",", $loadedPlugin->commands);
+				if ($message[0] == $config->prefix) {
+					foreach ($pluginCommands as &$pluginCommand) {	
 						if ($command[0] == $pluginCommand) {
 							if (!method_exists($loadedPlugin, $command[0])) {
 								die("Error, a command was defined without creating a function for it!\n");
@@ -150,7 +150,7 @@ while (!$exit) {
 								}
 								$loadedPlugin->$command[0]($sender, $command, $data, $config);
 							}
-						} 
+						}
 					}
 				}
 			}
