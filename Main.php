@@ -124,7 +124,6 @@ while (!$exit) {
 			
 			$message = str_replace(array(chr(10), chr(13)), '', $message);
 			
-			
 			// Check plugin commands
 			$message_split = explode(" ", $message);
 			$command = substr($message_split[0], 1);
@@ -154,8 +153,8 @@ while (!$exit) {
 					}
 				}
 			}
-		
-			
+			unset($message);
+			unset($sender);
 		}
 		
 		
