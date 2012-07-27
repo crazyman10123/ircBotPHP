@@ -20,6 +20,7 @@ class PluginManager
 				echo "Unable to load '".$plugin."'!\nFile does not exist!\n";
 			}
 		}
+		sort($config->allCommands);
 	}
 	
 	function loadPlugin($plugin, $config) {
