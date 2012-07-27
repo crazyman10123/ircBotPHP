@@ -24,7 +24,7 @@ if ($config->channel[0] != "#" && !empty($config->channel)) {
 	$error = true;
 }
 foreach ($config_options as $name => $value) {
-	if ((empty($value) || !isset($value)) && $name != "debug" && $name != "allCommands" && $name != "ownerHost") {
+	if ((empty($value) || !isset($value)) && $name != "debug" && $name != "allCommands" && $name != "ownerHost" && $name != "nickServ") {
 		echo "Please set ".$name." in config.php!\n";
 		$error = true;
 	}
@@ -37,7 +37,7 @@ if ($error) {
 $irc = new IRC($config->server, $config->nick, $config->channel);
 
 // Create plugin manager and load plugins
-$pluginManager = new PluginManager($config->plugins, $config);
+$pluginManager = new PluginManager($config);
 
 // Status notification
 echo "Attempting to connect to ".$config->server."\n";
@@ -60,6 +60,9 @@ while (!$exit) {
 		if (strstr($data, "376 ".$config->nick." :End of /MOTD command.")) {
 			if (!$hasJoined) {
 				echo "Connected to server\n";
+				$irc->sendMessage("NickServ", "identify ".$config->nickServ);
+				echo "Waiting 5 seconds for identification...\n";
+				sleep(5);
 				$irc->runCommand("JOIN ".$config->channel);
 			}
 		}
@@ -73,9 +76,16 @@ while (!$exit) {
 		}
 		
 		// Check if nick is registered
-		if (strstr($data, "This nickname is registered.")) {
+		if (empty($config->nickServ) && strstr($data, "This nickname is registered.")) {
 			if (!$hasJoined) {
-				die ("Oh no, that nick is registered to someone else!\n");
+				die ("Oh no, that nick is registered!\n");
+			}
+		}
+		
+		// Check if ns password is wrong
+		if (!empty($config->nickServ) && strstr($data, "Invalid password for ")) {
+			if (!$hasJoined) {
+				die ("Oh no, invalid nickserv password!\n");
 			}
 		}
 		
@@ -142,7 +152,7 @@ while (!$exit) {
 							if (!method_exists($loadedPlugin, $command[0])) {
 								die("Error, a command was defined without creating a function for it!\n");
 							} else {
-								if (empty($parameters)) {
+								if (empty($parameters) || $command[1] == $config->authPass) {
 									echo "'".$sender[1]."' ran '".$command[0]."'\n";
 								} else {
 									echo "'".$sender[1]."' ran '".$command[0]." ".$command[1]."'\n";

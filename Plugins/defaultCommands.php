@@ -2,7 +2,7 @@
 class defaultCommands implements botPlugin
 {
 
-	public $commands = "help,about,version,lmgtfy,poweroff,shorten,uptime,cycle,prefix";
+	public $commands = "help,about,version,poweroff,uptime,cycle,prefix,say,action";
 	public $begintime;
 	
 	public function onLoad() {
@@ -28,15 +28,15 @@ class defaultCommands implements botPlugin
 	
 	public function help($sender, $command, $data, $config) {
 		$commands = implode(" ", $config->allCommands);
-		$data[0]->sendMessage($sender[0], "Commands: ".$commands);
+		$data[0]->sendMessage($sender[0], "Commands:".$commands);
 	}
 	
 	public function about($sender, $command, $data, $config) {
-		$data[0]->sendMessage($sender[0], $sender[1].": ".chr(2)."ircBot v3 unstable".chr(15)." - http://github.com/jackwilsdon/ircBotPHP/");
+		$data[0]->sendMessage($sender[0], $sender[1].": ".chr(2)."ircBot v3 ".chr(3)."4"."unstable".chr(3).chr(15)." - http://github.com/jackwilsdon/ircBotPHP/");
 	}
 	
 	public function version($sender, $command, $data, $config) {
-		$data[0]->sendMessage($sender[0], $sender[1].": ".chr(2)."ircBot v3 unstable".chr(15)." - http://github.com/jackwilsdon/ircBotPHP/");
+		$data[0]->sendMessage($sender[0], $sender[1].": ".chr(2)."ircBot v3 ".chr(3)."4"."unstable".chr(3).chr(15)." - http://github.com/jackwilsdon/ircBotPHP/");
 	}
 	
 	public function lmgtfy($sender, $command, $data, $config) {
@@ -53,18 +53,6 @@ class defaultCommands implements botPlugin
 		if ($data[0]->isOwner($hostmask, $config)) {
 			$data[0]->disconnect("Shutdown requested by ".$sender[1], $config->channel);
 			exit(0);
-		}
-	}
-	
-	public function shorten($sender, $command, $data, $config) {
-		if ((!filter_var($command[1], FILTER_VALIDATE_URL)) || strstr($command[1], "tinyurl")) {
-			$data[0]->sendMessage($sender[0], $sender[1].": Well, that's not going to work!");
-		} else {
-			if (!empty($command[1])) { 
-				$data[0]->sendMessage($sender[0], $sender[1].": ".file_get_contents("http://tinyurl.com/api-create.php?url=".$command[1]));
-			} else {
-				$data[0]->sendMessage($sender[0], $sender[1].": I can't just shorten nothing!");
-			}
 		}
 	}
 	
@@ -97,6 +85,22 @@ class defaultCommands implements botPlugin
 			} else {
 				$data[0]->sendMessage($sender[0], "Well that won't work!");
 			}
+		}
+	}
+
+	public function say($sender, $command, $data, $config) {
+		$exploded_data = explode(" ", $data[1]);
+		$hostmask = $exploded_data[0];
+		if ($data[0]->isOwner($hostmask, $config)) {
+			$data[0]->sendMessage($config->channel, $command[1]);
+		}
+	}
+	
+	public function action($sender, $command, $data, $config) {
+		$exploded_data = explode(" ", $data[1]);
+		$hostmask = $exploded_data[0];
+		if ($data[0]->isOwner($hostmask, $config)) {
+			$data[0]->doAction($config->channel, $command[1]);
 		}
 	}
 	

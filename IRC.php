@@ -17,6 +17,11 @@ class IRC
 		fputs($irc->connection, "PRIVMSG ".$recipient." :".$message."\r\n");
 	}
 	
+	function doAction($recipient, $action) {
+		global $irc;
+		fputs($irc->connection,"PRIVMSG ".$recipient." :".chr(1)."ACTION ".$action.chr(1)."\r\n");
+	}
+	
 	function disconnect($message, $channel) {
 		global $irc;
 		fputs($irc->connection, "PART ".$channel." :".$message."\r\n");

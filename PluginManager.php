@@ -10,7 +10,9 @@ class PluginManager
 
 	public $loadedPlugins = array();
 	
-	function PluginManager($plugins, $config) {
+	function PluginManager($config) {
+		$plugins = $config->plugins;
+		sort($plugins);
 		foreach ($plugins as &$plugin) {
 			echo "Loading plugin '".$plugin."'...\n";
 			if (file_exists("Plugins/".$plugin.".php")) {
