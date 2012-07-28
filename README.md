@@ -39,9 +39,9 @@ If authorisation was successful, it will return "You have been authorised."
 
 **Commands**
 
-> *(prefix)auth <password>* - Authorises the current user with the provided password
+> `(prefix)auth <password>` - Authorises the current user with the provided password
 
-> *(prefix)deauth* - Deauthorises the current user (be sure to do this after you have run the command you needed to)
+> `(prefix)deauth` - Deauthorises the current user (be sure to do this after you have run the command you needed to)
 
 
 defaultCommands
