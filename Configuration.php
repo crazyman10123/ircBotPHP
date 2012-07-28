@@ -1,6 +1,8 @@
 <?PHP
 class Configuration
 {
+	public $timeZone = "GMT"; // Your timezone (for CTCP TIME)
+
 	public $server = ""; // The IRC server to connect to
 	public $nick = ""; // The Nick that the bot should use
 	public $channel = ""; // The Channel that the bot should join
@@ -14,6 +16,7 @@ class Configuration
 	
 	public $debug = false; // Debug mode - DO NOT TOUCH UNLESS YOU KNOW WHAT YOU ARE DOING!
 	
+	public $version = "ircBot v3 unstable"; // DO NOT EDIT
 
 	// DO NOT MODIFY
 	public $allCommands = array();
