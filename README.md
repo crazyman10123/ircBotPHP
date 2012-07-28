@@ -52,17 +52,17 @@ This plugin contains all of the default commands for the bot to be useful.
 
 > `(prefix)about` - Prints bot version and a link to github
 
-> **[admin]** `(prefix)action <action>` - The same as doing /me <action>, except it causes the bot to do the action
+> `(prefix)action <action>` **[admin]** - The same as doing /me <action>, except it causes the bot to do the action 
 
-> **[admin]** `(prefix)cycle` - Disconnects and reconnects to the channel. Good housekeeping
+> `(prefix)cycle` **[admin]** - Disconnects and reconnects to the channel. Good housekeeping
 
 > `(prefix)help` - Lists all commands from the enabled plugins
 
-> **[admin]** `(prefix)poweroff` - Causes bot to shut down and exit with a return code of 0
+> `(prefix)poweroff` **[admin]** - Causes bot to shut down and exit with a return code of 0
 
-> **[admin]** `(prefix)prefix <new prefix>` - *(Woah! That's a lot of prefixes!)* Changes the command prefix to the parameter passed
+> `(prefix)prefix <new prefix>` **[admin]** - *(Woah! That's a lot of prefixes!)* Changes the command prefix to the parameter passed
 
-> **[admin]** `(prefix)say <text>` - Causes the bot to say the parameter passed
+> `(prefix)say <text>` **[admin]** - Causes the bot to say the parameter passed
 
 > `(prefix)uptime` - Returns the bot's uptime in hours, minutes and seconds
 
