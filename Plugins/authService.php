@@ -24,8 +24,8 @@ class authService implements botPlugin
 		$hostmask = $exploded_data[0];
 		if ($data[0]->isOwner($hostmask, $config)) {
 			$config->ownerHost = null;
-			$data[0]->sendMessage($sender[0], "You have been deauthorised.");
-			echo "'".$sender[1]."' deauthorised!\n";
+			$data[0]->sendMessage($sender[0], "You have been de-authorised.");
+			echo "'".$sender[1]."' de-authorised!\n";
 		}
 	}
 }
