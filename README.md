@@ -1,6 +1,6 @@
-ircBot v3 - Nearly done!
-========================
-ircBot v3 is a more complex IRC bot made for command line usage. It is coded in PHP, and currently has a large plugin framework, but doesn't support joining multiple channels at once.
+ircBot v3.5 - We're getting there!
+==================================
+ircBot v3.5 is a more complex IRC bot made for command line usage. It is coded in PHP, and currently has a large plugin framework, but doesn't support joining multiple channels at once.
 
 
 Usage
@@ -69,6 +69,8 @@ This plugin contains all of the default commands for the bot to be useful.
 > `(prefix)uptime` - Returns the bot's uptime in hours, minutes and seconds
 
 > `(prefix)version` - Does the same as `(prefix)about`
+
+> `(prefix)reload` - Reloads all loaded plugins (if runkit is enabled)
 
 
 filter
