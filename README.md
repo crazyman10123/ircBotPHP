@@ -2,6 +2,7 @@ ircBot v3 - Nearly done!
 ========================
 ircBot v3 is a more complex IRC bot made for command line usage. It is coded in PHP, and currently has a large plugin framework, but doesn't support joining multiple channels at once.
 
+
 Usage
 -----
 ircBot v3 requires a CLI PHP installation. It is recommended to run this bot on a linux based OS, due to the ease of installation / use of the PHP CLI. I am not planning on putting any tutorials up on how to install CLI PHP. If you don't know how to do it, this bot isn't for you.
@@ -16,6 +17,7 @@ This should display messages about either setting up the bot, or loading plugins
 
 If you experience any errors whilst starting or using the bot, please report them using the **issue tracker** above.
 
+
 Plugins
 =======
 ircBot v3 comes with a whole new plugin API, making it more flexible and allowing you to do much more than in v2. Plugin loading and calling has been made faster and more efficient, through the use of command variables, instructing the bot on which plugins run which commands.
@@ -26,9 +28,45 @@ Take a look at the source of any of the plugins included, and you should be on y
 
 **Please note*(2)*:** To enable a plugin, add it's filename in config.php to $plugins.
 
+
+authService
+-----------
+This plugin ensure you are who you say you are... Well, it at least tries.
+To run any admin commands on the bot, you need to first authorise yourself using the command `(prefix)auth <password>`.
+If authorisation was successful, it will return "You have been authorised."
+
+**Please note:** if you run this inside a channel, everyone will be able to see your password. If you disconnect, they *could* switch nicknames to the same as yours, and auth using this password. This would give them temporary admin rights, before NickServe reverts them to their old nickname. **ENSURE YOUR NICKNAME IS REGISTERED WITH NICKSERV**
+
+**Commands**
+
+> *(prefix)auth <password>* - Authorises the current user with the provided password
+
+> *(prefix)deauth* - Deauthorises the current user (be sure to do this after you have run the command you needed to)
+
+
+defaultCommands
+---------------
+This plugin contains all of the default commands for the bot to be useful.
+
+**Commands**
+about,action,cycle,help,poweroff,prefix,say,uptime,version,
+> *(prefix)about* - Prints bot version and a link to github
+
+> **[admin]** `(prefix)action <action>` - The same as doing /me <action>, except it causes the bot to do the action
+
+> **[admin]** `(prefix)cycle` - Disconnects and reconnects to the channel. Good housekeeping
+
+> `(prefix)help` - Lists all commands from the enabled plugins
+
+> **[admin]** `(prefix)poweroff` - Causes bot to shut down and exit with a return code of 0
+
+> **[admin]** `(prefix)prefix <new prefix>` - *(Woah! That's a lot of prefixes!)* Changes the command prefix to the parameter passed
+
+> **[admin]** `(prefix)say <text>` - Causes the bot to say the parameter passed
+
+> `(prefix)uptime` - Returns the bot's uptime in hours, minutes and seconds
+
+> *(prefix)version* - Does the same as `(prefix)about`
+
 ***
-
-This will soon be updated with the command syntax for all included plugins
---------------------------------------------------------------------------
 Mainained by **crazyman10123** and **jackwilsdon**
-
