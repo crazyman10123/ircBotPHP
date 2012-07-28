@@ -7,8 +7,6 @@ interface botPlugin
 
 class PluginManager
 {
-
-	public $loadedPlugins = array();
 	
 	function PluginManager($config) {
 		$plugins = $config->plugins;
@@ -26,7 +24,6 @@ class PluginManager
 	}
 	
 	function loadPlugin($plugin, $config) {
-		global $loadedPlugins;
 		if (!isset($plugin->commands)) {
 			die("There is no commands variable in ".get_class($plugin)."\n");
 		} else {
@@ -36,7 +33,7 @@ class PluginManager
 			}
 		}		
 		$plugin->onLoad();
-		array_push($this->loadedPlugins, $plugin);
+		array_push($config->loadedPlugins, $plugin);
 	}
 }
 
