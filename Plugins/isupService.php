@@ -8,7 +8,7 @@ class isupService implements botPlugin
 	}
 	
 	public function isup($sender, $command, $data, $config) {
-		if ($this->isDomainAvailible($command[1])) {
+		if ($this->isDomainAvailible($command[1]) && !strstr($command[1], "localhost") && !strstr($command[1], "192.168.") && !strstr($command[1], "127.0.0.1")) {
 			$data[0]->sendMessage($sender[0], $sender[1].", ".$command[1]." is up and running!");
 		} else {
 			$data[0]->sendMessage($sender[0], $sender[1].", ".$command[1]." is currently down. Sorry!");
