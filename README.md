@@ -60,7 +60,7 @@ This plugin contains all of the default commands for the bot to be useful.
 
 > `(prefix)poweroff` **[admin]** - Causes bot to shut down and exit with a return code of 0
 
-> `(prefix)prefix <new prefix>` **[admin]** - *(Woah! That's a lot of prefixes!)* Changes the command prefix to the parameter passed
+> `(prefix)prefix <new prefix>` **[admin]** - Changes the command prefix to the parameter passed
 
 > `(prefix)say <text>` **[admin]** - Causes the bot to say the parameter passed
 
