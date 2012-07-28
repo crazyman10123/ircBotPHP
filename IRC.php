@@ -25,7 +25,7 @@ class IRC
 	function disconnect($message, $channel) {
 		global $irc;
 		fputs($irc->connection, "PART ".$channel." :".$message."\r\n");
-		sleep(5);
+		sleep(0.5);
 		exit(0);
 	}
 	
@@ -47,17 +47,17 @@ class IRC
 		fputs($irc->connection, $command."\r\n");
 	}
 	
-	function makeOwner($nick, $pass, $host, $config) {
-		if ($pass == $config->authPass && $nick == $config->authUser) {
-			$config->ownerHost = $host;
+	function makeOwner($host, $config) {
+		if ($host == $config->authMask) {
+			$config->isAuth = 1;
 			return true;
 		} else {
 			return false;
 		}
 	}
 	
-	function isOwner($host, $config) {
-		if ($config->ownerHost == $host) {
+	function isOwner($config) {
+		if ($config->isAuth == "1") {
 			return true;
 		} else {
 			return false;

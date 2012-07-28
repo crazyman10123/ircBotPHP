@@ -40,7 +40,7 @@ if ($config->channel[0] != "#" && !empty($config->channel)) {
 	$error = true;
 }
 foreach ($config_options as $name => $value) {
-	if ((empty($value) || !isset($value)) && $name != "debug" && $name != "allCommands" && $name != "ownerHost" && $name != "nickServ" && $name != "loadedPlugins") {
+	if ((empty($value) || !isset($value)) && $name != "debug" && $name != "allCommands" && $name != "isAuth" && $name != "nickServ" && $name != "loadedPlugins") {
 		echo "Please set ".$name." in config.php!\n";
 		$error = true;
 	}
@@ -215,7 +215,7 @@ while (!$exit) {
 							if (!method_exists($loadedPlugin, $command[0])) {
 								die("Error, a command was defined without creating a function for it!\n");
 							} else {
-								if (empty($parameters) || $command[1] == $config->authPass) {
+								if (empty($parameters)) {
 									echo "'".$sender[1]."' ran '".$command[0]."'\n";
 								} else {
 									echo "'".$sender[1]."' ran '".$command[0]." ".$command[1]."'\n";
