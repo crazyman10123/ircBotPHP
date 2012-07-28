@@ -33,17 +33,17 @@ Take a look at the source of any of the plugins included, and you should be on y
 
 authService
 -----------
-This plugin ensure you are who you say you are... Well, it at least tries.
-To run any admin commands on the bot, you need to first authorise yourself using the command `(prefix)auth <password>`.
+This plugin ensure you are who you say you are.
+To run any admin commands on the bot, you need to first authorise yourself using the command `(prefix)auth`.
 If authorisation was successful, it will return "You have been authorised."
 
-**Please note:** if you run this inside a channel, everyone will be able to see your password. If you disconnect, they *could* switch nicknames to the same as yours, and auth using this password. This would give them temporary admin rights, before NickServ reverts them to their old nickname. To remedy this, ensure your nickname is registered with NickServ, and that you only use the auth command in PM with the bot.
+This plugin requires configuring in **Configuration.php**. You need to enter your full hostmask including the colon at the beginning. The variable to alter is called `$authMask`.
 
 **Commands**
 
-> `(prefix)auth <password>` - Authorises the current user with the provided password
+> `(prefix)auth` - Authorises the current user using their hostmask
 
-> `(prefix)deauth` - Deauthorises the current user (be sure to do this after you have run the command you needed to)
+> `(prefix)deauth` - Deauthorises the current user
 
 
 defaultCommands
