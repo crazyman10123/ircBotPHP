@@ -20,7 +20,9 @@ If you experience any errors whilst starting or using the bot, please report the
 
 Plugins
 =======
-ircBot v3 comes with a whole new plugin API, making it more flexible and allowing you to do much more than in v2. Plugin loading and calling has been made faster and more efficient, through the use of command variables, instructing the bot on which plugins run which commands.
+ircBot v3 comes with a whole new plugin API, making it more flexible and allowing you to do much more than in v2. Plugin loading and calling has been made faster and more efficient, through the use of command variables, instructing the bot on which plugins contain which commands. The **onSpeak()** method has been kept, to allow for extra compatibility with plugins such as **filter**. This is called whenever a user speaks, allowing the plugin to see everything a person says. Usually, the bot looks for it's prefix before calling any functions, as this makes it faster and more efficient than just calling every plugin (like in v2).
+
+Commands work in PM, so any commands with passwords in should be run via PM. e.g. *`/msg (botname) (prefix)auth <password>`*.
 
 Take a look at the source of any of the plugins included, and you should be on your way coding plugins in no time (as long as you know some PHP).
 
@@ -35,7 +37,7 @@ This plugin ensure you are who you say you are... Well, it at least tries.
 To run any admin commands on the bot, you need to first authorise yourself using the command `(prefix)auth <password>`.
 If authorisation was successful, it will return "You have been authorised."
 
-**Please note:** if you run this inside a channel, everyone will be able to see your password. If you disconnect, they *could* switch nicknames to the same as yours, and auth using this password. This would give them temporary admin rights, before NickServe reverts them to their old nickname. **ENSURE YOUR NICKNAME IS REGISTERED WITH NICKSERV**
+**Please note:** if you run this inside a channel, everyone will be able to see your password. If you disconnect, they *could* switch nicknames to the same as yours, and auth using this password. This would give them temporary admin rights, before NickServ reverts them to their old nickname. To remedy this, ensure your nickname is registered with NickServ, and that you only use the auth command in PM with the bot.
 
 **Commands**
 
@@ -67,6 +69,80 @@ This plugin contains all of the default commands for the bot to be useful.
 > `(prefix)uptime` - Returns the bot's uptime in hours, minutes and seconds
 
 > `(prefix)version` - Does the same as `(prefix)about`
+
+
+filter
+------
+This is a bad words filter. On startup, you should get a message saying 'missing badwords.txt'. This means that you need to create badwords.txt in the main directory, and put words (that should trigger the user being kicked) inside it. badwords.txt is a newline-seperated list, meaning one word per line.
+
+This plugin has no commands. It simply kicks the user when they say any of the words contained in badwords.txt.
+
+
+guessGame
+---------
+This plugin is a simple number guessing game, where you have to guess a random number between one and ten.
+
+**Commands**
+
+> `(prefix)guess <number>` - Sends the bot your guess, it will reply with **Nope, try again** or **You win**
+
+
+isupService
+-----------
+The isupService plugin allows you to check whether a domain is online or not.
+
+**Commands**
+
+> `(prefix)isup <url>` - Returns whether the provided domain is online or offline
+
+
+lmgtfyService
+-------------
+**Warning:** This can look snarky if you use it a lot, try and refrain from using it unless someone ask a stupid question.
+
+The lmgtfyService (let me google that for you) is "For all those people who find it more convenient to bother you with their question rather than google it for themselves.". This plugin provides a search term on LMTFY and returns the URL.
+
+**Commands**
+
+> `(prefix)lmgtfy <search terms>` - Returns a lmgtfy url with the search terms entered
+
+
+pastebinService
+---------------
+This simple plugin just returns the pastebin URL along with a message about not posting code in the channel.
+
+**Commands**
+
+> `(prefix)pastebin` - Returns the pastebin URL along with a message about not posting code in the channel
+
+
+quotes
+------
+This plugin just returns a random, geeky quote whenever you run it. It requires a quotes.txt in the main directory, and this file should contain newline-seperated quotes, meaning one quote per line.
+
+**Commands**
+
+> `(prefix)quote` - Returns a random quote from quotes.txt
+
+
+shortenService
+--------------
+This service shortens URLs to something like `tinyurl.com/<randomstring>`.
+
+**Commands**
+
+> `(prefix)shorten <url>` - Returns a shortened URL directing to the parameter passed.
+
+
+xkcdComics
+----------
+**Warning:** Remove this plugin from Configuration.php if you are going to use this bot properly. It causes lag due to the cURL function inside it.
+
+This plugin simply returns a random xkcd comic URL. xkcd comics are usually geeky, so this plugin may be suitable for your channel, as a bit of fun.
+
+**Commands**
+
+> `(prefix)xkcd` - Returns a random xkcd comic URL
 
 ***
 
