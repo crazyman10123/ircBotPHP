@@ -2,7 +2,7 @@
 class defaultCommands implements botPlugin
 {
 
-	public $commands = "help,about,version,poweroff,uptime,cycle,prefix,say,action";
+	public $commands = "help,about,version,poweroff,uptime,cycle,prefix,say,action,cc,reload";
 	public $begintime;
 	
 	public function onLoad() {
@@ -32,11 +32,11 @@ class defaultCommands implements botPlugin
 	}
 	
 	public function about($sender, $command, $data, $config) {
-		$data[0]->sendMessage($sender[0], $sender[1].": ".chr(2)."ircBot v3 ".chr(3)."4"."unstable".chr(3).chr(15)." - http://github.com/jackwilsdon/ircBotPHP/");
+		$data[0]->sendMessage($sender[0], $sender[1].": ".chr(2)."ircBot v3.5 ".chr(3)."4"."unstable".chr(3).chr(15)." - http://github.com/jackwilsdon/ircBot/");
 	}
 	
 	public function version($sender, $command, $data, $config) {
-		$data[0]->sendMessage($sender[0], $sender[1].": ".chr(2)."ircBot v3 ".chr(3)."4"."unstable".chr(3).chr(15)." - http://github.com/jackwilsdon/ircBotPHP/");
+		$data[0]->sendMessage($sender[0], $sender[1].": ".chr(2)."ircBot v3.5 ".chr(3)."4"."unstable".chr(3).chr(15)." - http://github.com/jackwilsdon/ircBot/");
 	}
 	
 	public function lmgtfy($sender, $command, $data, $config) {
@@ -103,6 +103,30 @@ class defaultCommands implements botPlugin
 			$data[0]->doAction($config->channel, $command[1]);
 		}
 	}
-	
+
+	public function cc($sender, $command, $data, $config) {
+		$exploded_data = explode(" ", $data[1]);
+		$hostmask = $exploded_data[0];
+		if ($data[0]->isOwner($hostmask, $config)) {
+			if (!empty($command[1])) {
+				$data[0]->changeChannel($command[1], $config);
+			}
+		}
+	}
+
+	public function reload($sender, $command, $data, $config) {
+		$exploded_data = explode(" ", $data[1]);
+		$hostmask = $exploded_data[0];
+		if ($data[0]->isOwner($hostmask, $config)) {
+			if (function_exists("runkit_import")) {
+				foreach ($config->loadedPlugins as &$plugin) {
+					echo "Reloading ".get_class($plugin)."\n";
+					runkit_import(get_class($plugin));
+				}
+			} else {
+				$data[0]->sendMessage($sender[1], "runkit is not compiled with your current PHP installation. Reload will not work.");
+			}
+		}
+	}
 }
 ?>
