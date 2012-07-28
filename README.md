@@ -49,8 +49,8 @@ defaultCommands
 This plugin contains all of the default commands for the bot to be useful.
 
 **Commands**
-about,action,cycle,help,poweroff,prefix,say,uptime,version,
-> *(prefix)about* - Prints bot version and a link to github
+
+> `(prefix)about` - Prints bot version and a link to github
 
 > **[admin]** `(prefix)action <action>` - The same as doing /me <action>, except it causes the bot to do the action
 
@@ -66,7 +66,7 @@ about,action,cycle,help,poweroff,prefix,say,uptime,version,
 
 > `(prefix)uptime` - Returns the bot's uptime in hours, minutes and seconds
 
-> *(prefix)version* - Does the same as `(prefix)about`
+> `(prefix)version` - Does the same as `(prefix)about`
 
 ***
 Mainained by **crazyman10123** and **jackwilsdon**
