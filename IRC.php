@@ -47,17 +47,10 @@ class IRC
 		fputs($irc->connection, $command."\r\n");
 	}
 	
-	function makeOwner($host, $config) {
-		if ($host == $config->authMask) {
-			$config->isAuth = 1;
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	function isOwner($config) {
-		if ($config->isAuth == "1") {
+	function isOwner($host, $config) {
+		$generated_regex = str_replace("*", "[a-zA-Z0-9-]*", $config->authMask);
+		$generated_regex = str_replace("~", "[~]?", $generated_regex);
+		if (preg_match("/".$generated_regex."/", $host)) {
 			return true;
 		} else {
 			return false;
