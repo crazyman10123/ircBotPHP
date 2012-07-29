@@ -50,7 +50,7 @@ class defaultCommands implements botPlugin
 	public function poweroff($sender, $command, $data, $config) {
 		$exploded_data = explode(" ", $data[1]);
 		$hostmask = $exploded_data[0];
-		if ($data[0]->isOwner($config)) {
+		if ($data[0]->isOwner($hostmask, $config)) {
 			$data[0]->disconnect("Shutdown requested by ".$sender[1], $config->channel);
 			exit(0);
 		}
@@ -69,7 +69,7 @@ class defaultCommands implements botPlugin
 	public function cycle($sender, $command, $data, $config) {
 		$exploded_data = explode(" ", $data[1]);
 		$hostmask = $exploded_data[0];
-		if ($data[0]->isOwner($config)) {
+		if ($data[0]->isOwner($hostmask, $config)) {
 			$data[0]->cycle($config, $sender[1]);
 		}
 	}
@@ -78,7 +78,7 @@ class defaultCommands implements botPlugin
 		$exploded_data = explode(" ", $data[1]);
 		$hostmask = $exploded_data[0];
 		$prefix = $command[1];
-		if ($data[0]->isOwner($config)) {
+		if ($data[0]->isOwner($hostmask, $config)) {
 			if (!empty($command[1])) {
 				$data[0]->sendMessage($sender[0], "My prefix has been changed to ".$prefix[0]);
 				$config->prefix = $prefix[0];
@@ -91,7 +91,7 @@ class defaultCommands implements botPlugin
 	public function say($sender, $command, $data, $config) {
 		$exploded_data = explode(" ", $data[1]);
 		$hostmask = $exploded_data[0];
-		if ($data[0]->isOwner($config)) {
+		if ($data[0]->isOwner($hostmask, $config)) {
 			$data[0]->sendMessage($config->channel, $command[1]);
 		}
 	}
@@ -99,7 +99,7 @@ class defaultCommands implements botPlugin
 	public function action($sender, $command, $data, $config) {
 		$exploded_data = explode(" ", $data[1]);
 		$hostmask = $exploded_data[0];
-		if ($data[0]->isOwner($config)) {
+		if ($data[0]->isOwner($hostmask, $config)) {
 			$data[0]->doAction($config->channel, $command[1]);
 		}
 	}
@@ -107,7 +107,7 @@ class defaultCommands implements botPlugin
 	public function cc($sender, $command, $data, $config) {
 		$exploded_data = explode(" ", $data[1]);
 		$hostmask = $exploded_data[0];
-		if ($data[0]->isOwner($config)) {
+		if ($data[0]->isOwner($hostmask, $config)) {
 			if (!empty($command[1])) {
 				$data[0]->changeChannel($command[1], $config);
 			}
@@ -117,14 +117,10 @@ class defaultCommands implements botPlugin
 	public function reload($sender, $command, $data, $config) {
 		$exploded_data = explode(" ", $data[1]);
 		$hostmask = $exploded_data[0];
-		if ($data[0]->isOwner($config)) {
-			if (function_exists("runkit_import")) {
-				foreach ($config->loadedPlugins as &$plugin) {
-					echo "Reloading ".get_class($plugin)."\n";
-					runkit_import(get_class($plugin));
-				}
-			} else {
-				$data[0]->sendMessage($sender[1], "runkit is not compiled with your current PHP installation. Reload will not work.");
+		if ($data[0]->isOwner($hostmask, $config)) {
+			foreach ($config->loadedPlugins as &$plugin) {
+				echo "Reloading ".get_class($plugin)."\n";
+				runkit_import(get_class($plugin));
 			}
 		}
 	}
