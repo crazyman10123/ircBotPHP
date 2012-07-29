@@ -86,20 +86,21 @@ while (!$exit) {
 					echo "Identifying with NickServ...\n";
 					$irc->sendMessage("NickServ", "identify ".$config->nickServ);
 				}
+				sleep(10);
 				$irc->runCommand("JOIN ".$config->channel);
 			}
 		}
 		
 		// Check if NickServ password is wrong
-		if (!empty($config->nickServ) && $exploded_data[2] == "Invalid password for ".chr(2).$config->nick.chr(2).".") {
+		if (!empty($config->nickServ) && $exploded_data[3] == ":Invalid" && $exploded_data[4] == "password") {
 			if (!$hasJoined) {
 				die ("Oh no, invalid NickServ password!\n");
 			}
 		}
 		
-				
+		
 		// Check if NickServ login was successful
-		if ($exploded_data[1] == "You" && $exploded_data[4] == "identified") {
+		if ($exploded_data[3] == ":You" && $exploded_data[6] == "identified") {
 			echo "Successfully identified with NickServ!\n";
 		}
 		
@@ -119,14 +120,14 @@ while (!$exit) {
 		}
 		
 		// Check if nick is registered
-		if (empty($config->nickServ) && $exploded_data[2] == "This nickname is registered. Please choose a different nickname, or identify via ".chr(2)."/msg NickServ identify <password>".chr(2).".") {
+		if (empty($config->nickServ) && $exploded_data[3] == ":This" && $exploded_data[6] == "registered.") {
 			if (!$hasJoined) {
 				die ("Oh no, that nick is registered!\n");
 			}
 		}
 		
 		// Check if nick is 'already in use'
-		if ($exploded_data[2] == "Nickname is already in use.") {
+		if ($exploded_data[4] == ":Nickname" && $exploded_data[8] == "use.") {
 			if (!$hasJoined) {
 				die ("Oh no, that nick is in use!\n");
 			}
