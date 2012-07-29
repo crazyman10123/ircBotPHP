@@ -70,8 +70,6 @@ This plugin contains all of the default commands for the bot to be useful.
 
 > `(prefix)version` - Does the same as `(prefix)about`
 
-> `(prefix)reload` - Reloads all loaded plugins (if runkit is enabled)
-
 
 filter
 ------
