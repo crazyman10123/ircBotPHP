@@ -33,17 +33,7 @@ Take a look at the source of any of the plugins included, and you should be on y
 
 authService
 -----------
-This plugin ensure you are who you say you are.
-To run any admin commands on the bot, you need to first authorise yourself using the command `(prefix)auth`.
-If authorisation was successful, it will return "You have been authorised."
-
-This plugin requires configuring in **Configuration.php**. You need to enter your full hostmask including the colon at the beginning. The variable to alter is called `$authMask`.
-
-**Commands**
-
-> `(prefix)auth` - Authorises the current user using their hostmask
-
-> `(prefix)deauth` - Deauthorises the current user
+This plugin is no longer required (or works!), as hostMasks have taken over. Look in config.php for more details
 
 
 defaultCommands
