@@ -105,6 +105,11 @@ while (!$exit) {
 		}
 		
 		
+		// Check for channel ban
+		if ($exploded_data[1] == "474" && $exploded_data[4] == ":Cannot" && $exploded_data[6] == "channel") {
+			die($config->nick." is banned from ".$config->channel."\n");
+		}
+		
 		// Check for channel join
 		if ($exploded_data[1] == "JOIN" && $exploded_data[2] == $config->channel) {
 			if (!$hasJoined) {
