@@ -118,9 +118,13 @@ class defaultCommands implements botPlugin
 		$exploded_data = explode(" ", $data[1]);
 		$hostmask = $exploded_data[0];
 		if ($data[0]->isOwner($hostmask, $config)) {
-			foreach ($config->loadedPlugins as &$plugin) {
-				echo "Reloading ".get_class($plugin)."\n";
-				runkit_import(get_class($plugin));
+			if (function_exists("runkit_import")) {
+				foreach ($config->loadedPlugins as &$plugin) {
+					echo "Reloading ".get_class($plugin)."\n";
+					runkit_import(get_class($plugin));
+				}
+			} else {
+				$data[0]->sendMessage($sender[1], "Error: runkit has not been detected in your PHP installation. Please install runkit to use reload");
 			}
 		}
 	}
