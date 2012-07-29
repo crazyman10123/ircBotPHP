@@ -2,7 +2,7 @@
 class defaultCommands implements botPlugin
 {
 
-	public $commands = "help,about,version,poweroff,uptime,cycle,prefix,say,action,cc,reload";
+	public $commands = "help,about,version,poweroff,uptime,cycle,prefix,say,action,cc";
 	public $begintime;
 	
 	public function onLoad() {
@@ -110,21 +110,6 @@ class defaultCommands implements botPlugin
 		if ($data[0]->isOwner($hostmask, $config)) {
 			if (!empty($command[1])) {
 				$data[0]->changeChannel($command[1], $config);
-			}
-		}
-	}
-
-	public function reload($sender, $command, $data, $config) {
-		$exploded_data = explode(" ", $data[1]);
-		$hostmask = $exploded_data[0];
-		if ($data[0]->isOwner($hostmask, $config)) {
-			if (function_exists("runkit_import")) {
-				foreach ($config->loadedPlugins as &$plugin) {
-					echo "Reloading ".get_class($plugin)."\n";
-					runkit_import(get_class($plugin));
-				}
-			} else {
-				$data[0]->sendMessage($sender[1], "Error: runkit has not been detected in your PHP installation. Please install runkit to use reload");
 			}
 		}
 	}
