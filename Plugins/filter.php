@@ -1,13 +1,16 @@
 <?PHP
 class filter implements botPlugin
 {
-	public $badMessage = "Hey don't say that!";
 	public $badWords = array();
 	public $commands = "";
+	public $canRun = true;
 
 	public function onLoad() {
 		if (!file_exists("badwords.txt")) {
-			die("badwords.txt is missing!\n");
+			echo "badwords.txt is missing!\n";
+			$this->canRun = false;
+		} else {
+			$this->canRun = true;
 		}
 		$badWordsList = file_get_contents("badwords.txt");
 		$badWordsList = str_replace("*", "", $badWordsList);
@@ -15,10 +18,12 @@ class filter implements botPlugin
 	}
 	
 	public function onSpeak($sender, $command, $data, $config) {
-		foreach ($this->badWords as &$badWord) {
-			if (!empty($badWord)) {
-				if (strstr(strtolower($command[2]), strtolower($badWord))) {
-					$badword = true;					
+		if ($this->canRun) {
+			foreach ($this->badWords as &$badWord) {
+				if (!empty($badWord)) {
+					if (strstr(strtolower($command[2]), strtolower($badWord))) {
+						$badword = true;					
+					}
 				}
 			}
 		}
