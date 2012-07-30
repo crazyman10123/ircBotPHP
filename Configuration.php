@@ -3,15 +3,15 @@ class Configuration
 {
 	public $timeZone = "GMT"; // Your timezone (for CTCP TIME)
 
-	public $server = ""; // The IRC server to connect to
-	public $nick = ""; // The Nick that the bot should use
-	public $channel = ""; // The Channel that the bot should join
+	public $server = "irc.freenode.net"; // The IRC server to connect to
+	public $nick = "DeadBot5"; // The Nick that the bot should use
+	public $channel = "#test"; // The Channel that the bot should join
 	public $prefix = "-"; // The Prefix to use when running commands
-	public $authMask = ""; // Your IRC hostmask (accepts wildcards) E.G. tcial!~tcial@*.dslgb.com (the ~ is replaced to check if you are identified or not)
+	public $authMask = "*.dslgb"; // Your IRC hostmask (accepts wildcards) E.G. tcial!~tcial@*.dslgb.com (the ~ is replaced to check if you are identified or not)
 
-	public $nickServ = ""; // The nickserv password for the username, if it is registered (optional)
+	public $nickServ = "jack"; // The nickserv password for the username, if it is registered (optional)
 	
-	public $plugins = array("defaultCommands", "guessGame", "lmgtfyService", "quotes", "filter", "isupService", "opService", "shortenService", "findURLService", "kickService", "pastebinService", "xkcdComics"); // A list of plugins to enable
+	public $plugins = array("defaultCommands", "guessGame", "lmgtfyService", "filter", "isupService", "opService", "shortenService", "findURLService", "kickService", "pastebinService", "xkcdComics"); // A list of plugins to enable
 	
 	public $debug = false; // Debug mode - DO NOT TOUCH UNLESS YOU KNOW WHAT YOU ARE DOING!
 	
