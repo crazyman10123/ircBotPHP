@@ -52,6 +52,7 @@ class defaultCommands implements botPlugin
 		$hostmask = $exploded_data[0];
 		if ($data[0]->isOwner($hostmask, $config)) {
 			$data[0]->disconnect("Shutdown requested by ".$sender[1], $config->channel);
+			sleep(5);
 			exit(0);
 		}
 	}
