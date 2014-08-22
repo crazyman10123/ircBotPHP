@@ -11,7 +11,21 @@ class Configuration
 
 	public $nickServ = "jack"; // The nickserv password for the username, if it is registered (optional)
 	
-	public $plugins = array("defaultCommands", "guessGame", "lmgtfyService", "filter", "isupService", "opService", "shortenService", "findURLService", "kickService", "pastebinService", "xkcdComics"); // A list of plugins to enable
+	//List your plugins here (by filename). End each line wth a comma and make sure the file name is in quotes.
+	public $plugins = array(
+		"defaultCommands",
+		"guessGame",
+		"lmgtfyService",
+		"filter",
+		"isupService",
+		"opService",
+		"shortenService",
+		"findURLService",
+		"kickService",
+		"pastebinService",
+		"xkcdComics",
+		"feelingLuckyService"
+	); 
 	
 	public $debug = false; // Debug mode - DO NOT TOUCH UNLESS YOU KNOW WHAT YOU ARE DOING!
 	
