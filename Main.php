@@ -16,7 +16,9 @@ $config = new Configuration();
 
 // Hide any errors we get :)
 //Most errors are due to the code checking for certain codes that show up in extended messages, so this line doesn't cause any actual problems.
-error_reporting(E_ERROR | E_WARNING | E_PARSE);
+if($config->debug == false) {
+	error_reporting(E_ERROR | E_WARNING | E_PARSE);
+}	
 
 // Set time zone
 date_default_timezone_set($config->timeZone);
@@ -26,9 +28,20 @@ $exit = false;
 $hasJoined = false;
 $sender = null;
 $error = false;
+$reload = false;
 
 // Fix channel capitalisation
 $config->channel = strtolower($config->channel);
+
+// Fix name to character limit (9)
+$nickArr = str_split($config->nick);
+$i = 0;
+while($i < 9) {
+	$newArr[$i] = $nickArr[$i];
+	$i++;
+}
+$config ->nick = implode("", $newArr);
+echo "Username is ".$config->nick."\n";
 
 // Validate the configuration
 $config_options = get_class_vars("Configuration");
@@ -62,7 +75,7 @@ echo "Attempting to connect to ".$config->server."\n";
 // Check connection
 if ($irc->connection == false) {
 	die("Unable to connect to ".$config->server."\n");
-}
+}	
 
 // Loop until exit
 while (!$exit) {
@@ -112,7 +125,7 @@ while (!$exit) {
 		}
 		
 		// Check for channel join
-		if ($exploded_data[1] == "JOIN" && $exploded_data[2] == $config->channel) {
+		if ($exploded_data[1] == "JOIN" && ($exploded_data[2] == $config->channel || $exploded_data[2] == ":".$config->channel)) {
 			if (!$hasJoined) {
 				echo "Joined ".$config->channel."\n";
 				$hasJoined = true;
@@ -210,23 +223,35 @@ while (!$exit) {
 			$parameters = implode(" ", $message_split);
 			$data = array($irc, $data);
 			$command = array($command, $parameters, $message);
+			if($message == "prefix") {
+				$data[0]->sendMessage($sender[0], "Current prefix is ".$config->prefix);
+			}
 			foreach ($config->loadedPlugins as &$loadedPlugin) {
 				if (method_exists($loadedPlugin, "onSpeak")) {
 					$loadedPlugin->onSpeak($sender, $command, $data, $config);
 				}
 				$pluginCommands = explode(",", $loadedPlugin->commands);
 				if ($message[0] == $config->prefix) {
-					foreach ($pluginCommands as &$pluginCommand) {	
-						if ($command[0] == $pluginCommand) {
-							if (!method_exists($loadedPlugin, $command[0])) {
-								die("Error, a command was defined without creating a function for it!\n");
-							} else {
-								if (empty($parameters)) {
-									echo "'".$sender[1]."' ran '".$command[0]."'\n";
+					if($command[0] == "restart") {
+						$exploded_data = explode(" ", $data[1]);
+						$hostmask = $exploded_data[0];
+						if ($data[0]->isOwner($hostmask, $config)) {
+							$data[0]->sendMessage($sender[0], "Restarting. Please wait.");
+							exit(1);
+						}
+					} else {
+						foreach ($pluginCommands as &$pluginCommand) {	
+							if ($command[0] == $pluginCommand) {
+								if (!method_exists($loadedPlugin, $command[0])) {
+									die("Error, a command was defined without creating a function for it!\n");
 								} else {
-									echo "'".$sender[1]."' ran '".$command[0]." ".$command[1]."'\n";
+									if (empty($parameters)) {
+										echo "'".$sender[1]."' ran '".$command[0]."'\n";
+									} else {
+										echo "'".$sender[1]."' ran '".$command[0]." ".$command[1]."'\n";
+									}
+									$loadedPlugin->$command[0]($sender, $command, $data, $config);
 								}
-								$loadedPlugin->$command[0]($sender, $command, $data, $config);
 							}
 						}
 					}
@@ -235,8 +260,6 @@ while (!$exit) {
 			unset($message);
 			unset($sender);
 		}
-		
-		
 	}
 }
 ?>
