@@ -4,9 +4,9 @@ class IRC
 
 	public $irc = false;
 
-	function IRC($server, $nick, $channel) {
+	function IRC($server, $port, $nick, $channel) {
 		global $irc;
-		$irc = fsockopen($server, 6667);
+		$irc = fsockopen($server, $port);
 		fputs($irc,"NICK ".$nick."\r\n");
 		fputs($irc,"USER ".$nick." * * :".$nick."\r\n");
 		$this->connection = $irc;

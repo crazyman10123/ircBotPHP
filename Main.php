@@ -15,6 +15,7 @@ require('PluginManager.php');
 $config = new Configuration();
 
 // Hide any errors we get :)
+//Most errors are due to the code checking for certain codes that show up in extended messages, so this line doesn't cause any actual problems.
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
 // Set time zone
@@ -50,7 +51,7 @@ if ($error) {
 }
 
 // Connect to the IRC server
-$irc = new IRC($config->server, $config->nick, $config->channel);
+$irc = new IRC($config->server, $config->port, $config->nick, $config->channel);
 
 // Create plugin manager and load plugins
 $pluginManager = new PluginManager($config);
@@ -174,7 +175,6 @@ while (!$exit) {
 				$sender_nick = substr($exploded_hostmask[0], 1);
 				$irc->runCommand("NOTICE ".$sender_nick." :".chr(1)."TIME ".date("F j, Y, g:i a").chr(1));
 			}
-			
 			
 			// PM sender retrieval
 			if ($exploded_data[1] == "PRIVMSG" && $exploded_data[2] == $config->nick) {
