@@ -9,7 +9,9 @@ ircBot v3 requires a CLI PHP installation. It is recommended to run this bot on 
 
 **Starting the bot**
 
-Run Start.bat or Start.sh(coming soon)
+Run Start.bat or Start.sh
+
+For Linux users, you need to open up Start.sh and modify it to use the terminal emulator that you have installed.
 
 This should display messages about either setting up the bot, or loading plugins; depending on whether you have configured your bot or not.
 
