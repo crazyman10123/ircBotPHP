@@ -1,66 +1,130 @@
 <?PHP
-class defaultCommands implements iPlugin
-{	
-	public function onLoad() {
-	}
+class defaultCommands implements botPlugin
+{
 
-	public function getUser($data, $connection) {
-		$user = explode("!", $data);
-		$user = substr($user[0], 1);
-		fputs($connection->connection, "WHO ".$user." %na\r\n");
-		return fgets($connection->connection, 128)."\n";
+	public $commands = "help,about,version,poweroff,uptime,cycle,prefix,say,action,cc,sc";
+	public $begintime;
+	
+	public function onLoad() {
+		$time = microtime();
+		$time = explode(' ', $time);
+		$time = $time[1] + $time[0];
+		$this->begintime = $time;
 	}
 	
-	public function isOwner($data, $connection, $config) {
-		
+	public function sc($sender, $command, $data, $config) { 
+		$exploded_data = explode(" ", $data[1]);
+		$hostmask = $exploded_data[0];
+		if ($data[0]->isOwner($hostmask, $config)) {
+			if(!empty($command[1])) {
+				file_put_contents('channel.txt', $command[1]);
+				exit(2);
+			} else {
+				$data[0]->sendMessage($sender[0], "Can't go to an unnamed channel.");
+			}
+		}
+	}
+	
+	public function secondsToTime($seconds) {
+		$hours = floor($seconds / (60 * 60));
+		$divisor_for_minutes = $seconds % (60 * 60);
+		$minutes = floor($divisor_for_minutes / 60);
+		$divisor_for_seconds = $divisor_for_minutes % 60;
+		$seconds = ceil($divisor_for_seconds);
+		$obj = array(
+			"h" => (int) $hours,
+			"m" => (int) $minutes,
+			"s" => (int) $seconds,
+		);
+		return $obj;
+	}
+	
+	public function help($sender, $command, $data, $config) {
+		$commands = implode(" ", $config->allCommands);
+		$data[0]->sendMessage($sender[0], "Commands:".$commands);
+	}
+	
+	public function about($sender, $command, $data, $config) {
+		$data[0]->sendMessage($sender[0], $sender[1].": ".chr(2)."ircBot v3.5 ".chr(3)."4"."unstable".chr(3).chr(15)." - http://github.com/crazyman10123/ircBotPHP/");
+	}
+	
+	public function version($sender, $command, $data, $config) {
+		$data[0]->sendMessage($sender[0], $sender[1].": ".chr(2)."ircBot v3.5 ".chr(3)."4"."unstable".chr(3).chr(15)." - http://github.com/crazyman10123ircBotPHP/");
+	}
+	
+	public function lmgtfy($sender, $command, $data, $config) {
+		if (!empty($command[1])) { 
+			$data[0]->sendMessage($sender[0], $sender[1].": http://lmgtfy.com/?q=".urlencode($command[1]));
+		} else {
+			$data[0]->sendMessage($sender[0], $sender[1].": I can't just google nothing!");
+		}
+	}
+	
+	public function poweroff($sender, $command, $data, $config) {
+		$exploded_data = explode(" ", $data[1]);
+		$hostmask = $exploded_data[0];
+		if ($data[0]->isOwner($hostmask, $config)) {
+			$data[0]->disconnect("Shutdown requested by ".$sender[1], $config->channel);
+			sleep(5);
+			exit(0);
+		}
+	}
+	
+	public function uptime($sender, $command, $data, $config) {
+		$time = microtime();
+		$time = explode(" ", $time);
+		$time = $time[1] + $time[0];
+		$endtime = $time;
+		$totaltime = ($endtime - $this->begintime);
+		$time = $this->secondsToTime($totaltime);
+		$data[0]->sendMessage($sender[0], "I have been up for ".$time['h']." hours, ".$time['m']." minutes and ".$time['s']." seconds!");
+	}
+	
+	public function cycle($sender, $command, $data, $config) {
+		$exploded_data = explode(" ", $data[1]);
+		$hostmask = $exploded_data[0];
+		if ($data[0]->isOwner($hostmask, $config)) {
+			$data[0]->cycle($config, $sender[1]);
+		}
+	}
+	
+	public function prefix($sender, $command, $data, $config) {
+		$exploded_data = explode(" ", $data[1]);
+		$hostmask = $exploded_data[0];
+		$prefix = $command[1];
+		if ($data[0]->isOwner($hostmask, $config)) {
+			if (!empty($command[1])) {
+				$data[0]->sendMessage($sender[0], "My prefix has been changed to ".$prefix[0]);
+				$config->prefix = $prefix[0];
+			} else {
+				$data[0]->sendMessage($sender[0], "Well that won't work!");
+			}
+		}
 	}
 
-	public function onSpeak($sender, $message, $rawdata = null, $connection, $config) {
-		$exploded_message = explode(" ", $message);
-		$command = $exploded_message[0];
-		array_shift($exploded_message);
-		$parameters = implode(" ", $exploded_message);
-		$user = $this->getUser($data, $connection);
-		switch ($command) {
-			case $config->prefix."reload":
-				$connection->sendMessage($sender, "How about NO.");
-				break;
-				
-			case $config->prefix."bye":
-				if ($user == $config->owner || $user == $config->bye) {
-					echo "Shutdown requested by ".$user."\n";
-					$connection->sendMessage($sender, "Goodbye, ".$user);
-					sleep(5);
-					$connection->disconnect("Shutdown requested by ".$user, $config->channel);
-				}
-				break;
-				
-			case $config->prefix."plugins":
-				$plugins = implode(" ", $config->plugins);
-				$connection->sendMessage($sender, "Currently loaded plugins: ".$plugins);
-				break;
-				
-			case $config->prefix."cc":
-				if ($user == $config->owner) {
-					if (empty($parameters)) {
-						$connection->sendMessage($sender, "What do you think I am, stupid?");
-					} else {
-						$connection->changeChannel($parameters, $config);
-					}
-				}
-				break;
-				
-			case $config->prefix."cp":
-				if ($user == $config->owner) {
-					if (empty($parameters[0])) {
-						$connection->sendMessage($sender, "What do you think I am, stupid?");
-					} else {
-						$connection->sendMessage($sender, "My prefix is now ".$parameters[0]);
-						$config->prefix = $parameters[0];
-					}
-				}
-				break;
-					
+	public function say($sender, $command, $data, $config) {
+		$exploded_data = explode(" ", $data[1]);
+		$hostmask = $exploded_data[0];
+		if ($data[0]->isOwner($hostmask, $config)) {
+			$data[0]->sendMessage($config->channel, $command[1]);
+		}
+	}
+	
+	public function action($sender, $command, $data, $config) {
+		$exploded_data = explode(" ", $data[1]);
+		$hostmask = $exploded_data[0];
+		if ($data[0]->isOwner($hostmask, $config)) {
+			$data[0]->doAction($config->channel, $command[1]);
+		}
+	}
+
+	public function cc($sender, $command, $data, $config) {
+		$exploded_data = explode(" ", $data[1]);
+		$hostmask = $exploded_data[0];
+		if ($data[0]->isOwner($hostmask, $config)) {
+			if (!empty($command[1])) {
+				$data[0]->changeChannel($command[1], $config);
+			}
 		}
 	}
 }

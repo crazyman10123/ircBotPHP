@@ -1,80 +1,67 @@
-ircBot v2.0
-=========
-IRCBot is a basic bot I coded in PHP made for CLI use. It supports plugins, but can only join one channel at a time.
+ircBot v3.6 - We're getting there!
+==================================
+ircBot v3.6 is a more complex IRC bot made for command line usage. It is coded in PHP, and currently has a large plugin framework, but doesn't support joining multiple channels at once.
 
-When running commands, you will need to use the prefix defined in **config.php** or using the command **-cp**.
 
 Usage
 -----
-This bot requires a CLI installation of PHP. It is reccomended to run this bot on a *nix based OS, as this allows you to run PHP in the command line easily. I will not put a tutorial up on how to use this bot in Windows. You will just have to google "Windows CLI PHP" and hope for the best :)
+ircBot v3 requires a CLI PHP installation. It is recommended to run this bot on a linux based OS, due to the ease of installation / use of the PHP CLI. I am not planning on putting any tutorials up on how to install CLI PHP. If you don't know how to do it, this bot isn't for you.
 
 **Starting the bot**
 
-*Ensure your current directory is that of the bot (has config.php, main.php etc)*
+Run Start.bat or Start.sh(coming soon)
 
-> php main.php
+This should display messages about either setting up the bot, or loading plugins; depending on whether you have configured your bot or not.
 
-This should start the bot.
+If you experience any errors whilst starting or using the bot, please report them using the **issue tracker** above.
 
-If you experience any errors, please don't hesistate to use the **issues** page located here: https://github.com/jackwilsdon/ircBot/issues
+As of version 3.6, command line arguments are handled but only one specific argument is. I plan on adding more functionality soon.
+
 
 Plugins
--------
-ircBot v2 comes with a 'defaultCommands' plugin, along with a googl (url shortener) and lmgtfy plugin. These add basic bot function, such as -bye (shut down) and changing channels.
+=======
+ircBot v3 comes with a whole new plugin API, making it more flexible and allowing you to do much more than in v2. Plugin loading and calling has been made faster and more efficient, through the use of command variables, instructing the bot on which plugins contain which commands. The **onSpeak()** method has been kept, to allow for extra compatibility with plugins such as **filter**. This is called whenever a user speaks, allowing the plugin to see everything a person says. Usually, the bot looks for it's prefix before calling any functions, as this makes it faster and more efficient than just calling every plugin (like in v2).
 
-Take a look at the googl or lmgtfy plugins to get the basics. An example plugin is also included.
+Commands work in PM, so any commands with passwords in should be run via PM. e.g. *`/msg (botname) (prefix)auth <password>`*.
 
-To enable your plugin, you need to modify config.php and add your plugin name to the array (without the .php).
+Take a look at the source of any of the plugins included, and you should be on your way coding plugins in no time (as long as you know some PHP).
+
+**Please note:** The plugin file name must be the same as it's class name, but neither of these can be the same as any commands inside.
+
+**Please note*(2)*:** To enable a plugin, add its filename in config.php to $plugins.
+
+
+authService
+-----------
+This plugin is no longer required (or works!), as hostMasks have taken over. Look in config.php for more details
+
 
 defaultCommands
 ---------------
-The bot has the following default commands.
-* *reload* - Reloads the bots plugins (currently doesn't do anything)
-* *bye* - Shuts down bot
-* *plugins* - Lists currently loaded plugins
-* *cc <channel>* - Instructs the bot to change channels
-* *cp <prefix>* - Instructs the bot to change prefix
-**Please also note** that all of these commands work in PM, so if you lose the bot (it joins a non-existant channel), you can instruct it to move to a known channel.
+This plugin contains all of the default commands for the bot to be useful.
 
+**Commands**
 
-lmgtfy
-------
-*Let me google that for you (lmgtfy)* is a popular web service, 'For all those people who find it more convenient to bother you with their question rather than google it for themselves.'. Basically, the web service google a term for you, but in an entertaining way, by 'taking control' of your computer, and typing it into google for you. (please note, it doesn't take control of your computer :D).
+> `(prefix)about` - Prints bot version and a link to github
 
-**Command Reference**
-* *lmgtfy <search string>* - Links to the LMGTFY service with 'search string'.
+> `(prefix)action <action>` **[admin]** - The same as doing /me <action>, except it causes the bot to do the action 
 
+> `(prefix)cycle` **[admin]** - Disconnects and reconnects to the channel. Good housekeeping
 
-googl
------
-*Google's web shortening service*
-This plugin just shortens web URLs to around 10 characters. This can be useful in situations where you don't want to fill the chat with a large url, causing spam for some users.
+> `(prefix)help` - Lists all commands from the enabled plugins
 
-**Command Reference**
-* *shorten <url>* - Shortens a URL using goo.gl's shortening service.
+> `(prefix)poweroff` **[admin]** - Causes bot to shut down and exit with a return code of 0
 
-isup
-----
-*Checks whether a url is online*
-There isn't much to say about this plugin, you just run the command and pass it a domain, and it will tell you if the site is online or not.
+> `(prefix)prefix <new prefix>` **[admin]** - Changes the command prefix to the parameter passed
 
-**Command Reference**
-* *isup <url>* - Returns whether a URL is online or offline.
+> `(prefix)say <text>` **[admin]** - Causes the bot to say the parameter passed
 
-uptime
-------
-*Shows the bot's current uptime*
-* *uptime* - Returns the bot's current uptime in hours, minutes and seconds.
+> `(prefix)uptime` - Returns the bot's uptime in hours, minutes and seconds
 
-Changelog
----------
-*I probably won't update these*
-* Removed some unused configuration options
-* Added config validation
-* Added registration detection, if username is registered, bot exits
+> `(prefix)version` - Does the same as `(prefix)about`
 
-Planned
--------
-* Registration username and password
-* Statistics
-* More plugin API documentation
+> `(prefix)restart` **[admin]** -Restarts the bot and reloads all config and plugins.
+
+> `(prefix)sc <channel>`  **[admin]** -Restarts the bot, opens up a second instance of the bot in the specified channel.
+
+Mainained by **crazyman10123** and **jackwilsdon**
