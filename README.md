@@ -9,13 +9,13 @@ ircBot v3 requires a CLI PHP installation. It is recommended to run this bot on 
 
 **Starting the bot**
 
-*Ensure you are in the same directory as the bot*
-
-> php Main.php
+Run Start.bat or Start.sh(coming soon)
 
 This should display messages about either setting up the bot, or loading plugins; depending on whether you have configured your bot or not.
 
 If you experience any errors whilst starting or using the bot, please report them using the **issue tracker** above.
+
+As of version 3.6, command line arguments are handled but only one specific argument is. I plan on adding more functionality soon.
 
 
 Plugins
@@ -28,7 +28,7 @@ Take a look at the source of any of the plugins included, and you should be on y
 
 **Please note:** The plugin file name must be the same as it's class name, but neither of these can be the same as any commands inside.
 
-**Please note*(2)*:** To enable a plugin, add it's filename in config.php to $plugins.
+**Please note*(2)*:** To enable a plugin, add its filename in config.php to $plugins.
 
 
 authService
@@ -59,5 +59,9 @@ This plugin contains all of the default commands for the bot to be useful.
 > `(prefix)uptime` - Returns the bot's uptime in hours, minutes and seconds
 
 > `(prefix)version` - Does the same as `(prefix)about`
+
+> `(prefix)restart` **[admin]** -Restarts the bot and reloads all config and plugins.
+
+> `(prefix)sc <channel>`  **[admin]** -Restarts the bot, opens up a second instance of the bot in the specified channel.
 
 Mainained by **crazyman10123** and **jackwilsdon**

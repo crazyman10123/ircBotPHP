@@ -2,7 +2,7 @@
 class defaultCommands implements botPlugin
 {
 
-	public $commands = "help,about,version,poweroff,uptime,cycle,prefix,say,action,cc";
+	public $commands = "help,about,version,poweroff,uptime,cycle,prefix,say,action,cc,sc";
 	public $begintime;
 	
 	public function onLoad() {
@@ -10,6 +10,19 @@ class defaultCommands implements botPlugin
 		$time = explode(' ', $time);
 		$time = $time[1] + $time[0];
 		$this->begintime = $time;
+	}
+	
+	public function sc($sender, $command, $data, $config) { 
+		$exploded_data = explode(" ", $data[1]);
+		$hostmask = $exploded_data[0];
+		if ($data[0]->isOwner($hostmask, $config)) {
+			if(!empty($command[1])) {
+				file_put_contents('channel.txt', $command[1]);
+				exit(2);
+			} else {
+				$data[0]->sendMessage($sender[0], "Can't go to an unnamed channel.");
+			}
+		}
 	}
 	
 	public function secondsToTime($seconds) {
@@ -32,11 +45,11 @@ class defaultCommands implements botPlugin
 	}
 	
 	public function about($sender, $command, $data, $config) {
-		$data[0]->sendMessage($sender[0], $sender[1].": ".chr(2)."ircBot v3.5 ".chr(3)."4"."unstable".chr(3).chr(15)." - http://github.com/jackwilsdon/ircBot/");
+		$data[0]->sendMessage($sender[0], $sender[1].": ".chr(2)."ircBot v3.5 ".chr(3)."4"."unstable".chr(3).chr(15)." - http://github.com/crazyman10123/ircBotPHP/");
 	}
 	
 	public function version($sender, $command, $data, $config) {
-		$data[0]->sendMessage($sender[0], $sender[1].": ".chr(2)."ircBot v3.5 ".chr(3)."4"."unstable".chr(3).chr(15)." - http://github.com/jackwilsdon/ircBot/");
+		$data[0]->sendMessage($sender[0], $sender[1].": ".chr(2)."ircBot v3.5 ".chr(3)."4"."unstable".chr(3).chr(15)." - http://github.com/crazyman10123ircBotPHP/");
 	}
 	
 	public function lmgtfy($sender, $command, $data, $config) {

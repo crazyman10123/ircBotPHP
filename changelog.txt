@@ -1,0 +1,3 @@
+v3.6
+-Added changelog
+-Going to set this as "Initial Release" for the changelog.

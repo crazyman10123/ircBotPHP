@@ -1,5 +1,8 @@
 <?PHP
 
+//Set command line arguments to $_GET array
+parse_str(implode('&', array_slice($argv, 1)), $_GET);
+
 // Boot time
 $time = microtime();
 $time = explode(' ', $time);
@@ -31,13 +34,21 @@ $error = false;
 $reload = false;
 
 // Fix channel capitalisation
-$config->channel = strtolower($config->channel);
+if(empty($_GET['Channel'])) {
+	$config->channel = strtolower($config->channel);
+} else {
+	$config->channel = strtolower($_GET['Channel']);
+}
 
 // Fix name to character limit (9)
 $nickArr = str_split($config->nick);
 $i = 0;
 while($i < 9) {
-	$newArr[$i] = $nickArr[$i];
+	if(!empty($_GET['Channel']) && $i == 8) {
+		$newArr[$i] = 2;
+	} else {
+		$newArr[$i] = $nickArr[$i];
+	}
 	$i++;
 }
 $config ->nick = implode("", $newArr);
@@ -232,28 +243,32 @@ while (!$exit) {
 				}
 				$pluginCommands = explode(",", $loadedPlugin->commands);
 				if ($message[0] == $config->prefix) {
-					if($command[0] == "restart") {
-						$exploded_data = explode(" ", $data[1]);
-						$hostmask = $exploded_data[0];
-						if ($data[0]->isOwner($hostmask, $config)) {
-							$data[0]->sendMessage($sender[0], "Restarting. Please wait.");
-							exit(1);
-						}
-					} else {
-						foreach ($pluginCommands as &$pluginCommand) {	
-							if ($command[0] == $pluginCommand) {
-								if (!method_exists($loadedPlugin, $command[0])) {
-									die("Error, a command was defined without creating a function for it!\n");
-								} else {
-									if (empty($parameters)) {
-										echo "'".$sender[1]."' ran '".$command[0]."'\n";
+					if(!empty($command[0])) {
+						if($command[0] == "restart") {
+							$exploded_data = explode(" ", $data[1]);
+							$hostmask = $exploded_data[0];
+							if ($data[0]->isOwner($hostmask, $config)) {
+								$data[0]->sendMessage($sender[0], "Restarting. Please wait.");
+								exit(1);
+							}
+						} else {
+							foreach ($pluginCommands as &$pluginCommand) {	
+								if ($command[0] == $pluginCommand) {
+									if (!method_exists($loadedPlugin, $command[0])) {
+										die("Error, a command was defined without creating a function for it!\n");
 									} else {
-										echo "'".$sender[1]."' ran '".$command[0]." ".$command[1]."'\n";
+										if (empty($parameters)) {
+											echo "'".$sender[1]."' ran '".$command[0]."'\n";
+										} else {
+											echo "'".$sender[1]."' ran '".$command[0]." ".$command[1]."'\n";
+										}
+										$loadedPlugin->$command[0]($sender, $command, $data, $config);
 									}
-									$loadedPlugin->$command[0]($sender, $command, $data, $config);
 								}
 							}
 						}
+					} else {
+						echo $sender[1]." sent the prefix but no command.\n";
 					}
 				}
 			}
