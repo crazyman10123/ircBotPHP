@@ -16,10 +16,7 @@ class Configuration
 	
 	//List your plugins here (by filename). End each line wth a comma and make sure the file name is in quotes.
 	public $plugins = array(
-		"defaultCommands",
-		"lmgtfyService",
-		"guessGame",
-		"filterTwitch"
+		"defaultCommands"
 	); 
 	
 	public $debug = false; // Debug mode - DO NOT TOUCH UNLESS YOU KNOW WHAT YOU ARE DOING!
