@@ -4,11 +4,14 @@ class IRC
 
 	public $irc = false;
 
-	function IRC($server, $port, $nick, $channel) {
+	function IRC($server, $port, $nick, $channel, $password) {
 		global $irc;
 		$irc = fsockopen($server, $port);
+		echo "PASS ".$password."\r\n";
+		fputs($irc,"PASS ".$password."\r\n");
 		fputs($irc,"NICK ".$nick."\r\n");
 		fputs($irc,"USER ".$nick." * * :".$nick."\r\n");
+		
 		$this->connection = $irc;
 	}
 	

@@ -1,11 +1,11 @@
-ircBot v3.6 - We're getting there!
+ircBot v4.0 - Twitch integration!
 ==================================
-ircBot v3.6 is a more complex IRC bot made for command line usage. It is coded in PHP, and currently has a large plugin framework, but doesn't support joining multiple channels at once.
+ircBot v4.0 is a more complex IRC bot made for command line usage. It is coded in PHP, and currently has a large plugin framework, but doesn't support joining multiple channels at once.
 
 
 Usage
 -----
-ircBot v3 requires a CLI PHP installation. It is recommended to run this bot on a linux based OS, due to the ease of installation / use of the PHP CLI. I am not planning on putting any tutorials up on how to install CLI PHP. If you don't know how to do it, this bot isn't for you.
+ircBot requires a CLI PHP installation. It is recommended to run this bot on a linux based OS, due to the ease of installation / use of the PHP CLI. I am not planning on putting any tutorials up on how to install CLI PHP. If you don't know how to do it, this bot isn't for you.
 
 **Starting the bot**
 
@@ -66,4 +66,4 @@ This plugin contains all of the default commands for the bot to be useful.
 
 > `(prefix)sc <channel>`  **[admin]** -Restarts the bot, opens up a second instance of the bot in the specified channel.
 
-Mainained by **crazyman10123** and **jackwilsdon**
+Maintained by **crazyman10123** and **jackwilsdon**

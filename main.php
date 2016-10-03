@@ -40,11 +40,11 @@ if(empty($_GET['Channel'])) {
 	$config->channel = strtolower($_GET['Channel']);
 }
 
-// Fix name to character limit (9)
+// Fix name to character limit (20)
 $nickArr = str_split($config->nick);
 $i = 0;
-while($i < 9) {
-	if(!empty($_GET['Channel']) && $i == 8) {
+while($i < 20) {
+	if(!empty($_GET['Channel']) && $i == 19) {
 		$newArr[$i] = 2;
 	} else {
 		$newArr[$i] = $nickArr[$i];
@@ -75,7 +75,7 @@ if ($error) {
 }
 
 // Connect to the IRC server
-$irc = new IRC($config->server, $config->port, $config->nick, $config->channel);
+$irc = new IRC($config->server, $config->port, $config->nick, $config->channel, $config->oauth);
 
 // Create plugin manager and load plugins
 $pluginManager = new PluginManager($config);
@@ -262,7 +262,8 @@ while (!$exit) {
 										} else {
 											echo "'".$sender[1]."' ran '".$command[0]." ".$command[1]."'\n";
 										}
-										$loadedPlugin->$command[0]($sender, $command, $data, $config);
+										$thisCom = $command[0]; //Had to do this to allow Twitch integration, odd I know
+										$loadedPlugin->$thisCom($sender, $command, $data, $config);
 									}
 								}
 							}

@@ -1,3 +1,9 @@
+v4.0
+Twitch integration!
+-Small changes to irc.php and main.php to allow the bot to function on the twitch IRC server
+-oauth is used for authenticating the bot when connected to the twitch IRC servers. You must obtain the oauth for the bot's account before usage.
+-All bots require their own account.
+
 v3.6
 -Added changelog
 -Going to set this as "Initial Release" for the changelog.
