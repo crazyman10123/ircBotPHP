@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Ircbotphp by crazyman10123</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Ircbotphp</h1>
+        <h2>This is just where I keep my irc bot&#39;s code for all to see!</h2>
+        <a href="https://github.com/crazyman10123/ircBotPHP" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a id="ircbot-v40---twitch-integration" class="anchor" href="#ircbot-v40---twitch-integration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ircBot v4.0 - Twitch integration!</h1>
+
+<p>ircBot v4.0 is a more complex IRC bot made for command line usage. It is coded in PHP, and currently has a large plugin framework, but doesn't support joining multiple channels at once.</p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>ircBot requires a CLI PHP installation. It is recommended to run this bot on a linux based OS, due to the ease of installation / use of the PHP CLI. I am not planning on putting any tutorials up on how to install CLI PHP. If you don't know how to do it, this bot isn't for you.</p>
+
+<p><strong>Starting the bot</strong></p>
+
+<p>Run Start.bat or Start.sh</p>
+
+<p>For Linux users, you need to open up Start.sh and modify it to use the terminal emulator that you have installed.</p>
+
+<p>This should display messages about either setting up the bot, or loading plugins; depending on whether you have configured your bot or not.</p>
+
+<p>If you experience any errors whilst starting or using the bot, please report them using the <strong>issue tracker</strong> above.</p>
+
+<p>As of version 3.6, command line arguments are handled but only one specific argument is. I plan on adding more functionality soon.</p>
+
+<h1>
+<a id="plugins" class="anchor" href="#plugins" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Plugins</h1>
+
+<p>ircBot v3 comes with a whole new plugin API, making it more flexible and allowing you to do much more than in v2. Plugin loading and calling has been made faster and more efficient, through the use of command variables, instructing the bot on which plugins contain which commands. The <strong>onSpeak()</strong> method has been kept, to allow for extra compatibility with plugins such as <strong>filter</strong>. This is called whenever a user speaks, allowing the plugin to see everything a person says. Usually, the bot looks for it's prefix before calling any functions, as this makes it faster and more efficient than just calling every plugin (like in v2).</p>
+
+<p>Commands work in PM, so any commands with passwords in should be run via PM. e.g. <em><code>/msg (botname) (prefix)auth &lt;password&gt;</code></em>.</p>
+
+<p>Take a look at the source of any of the plugins included, and you should be on your way coding plugins in no time (as long as you know some PHP).</p>
+
+<p><strong>Please note:</strong> The plugin file name must be the same as it's class name, but neither of these can be the same as any commands inside.</p>
+
+<p><strong>Please note<em>(2)</em>:</strong> To enable a plugin, add its filename in config.php to $plugins.</p>
+
+<h2>
+<a id="authservice" class="anchor" href="#authservice" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>authService</h2>
+
+<p>This plugin is no longer required (or works!), as hostMasks have taken over. Look in config.php for more details</p>
+
+<h2>
+<a id="defaultcommands" class="anchor" href="#defaultcommands" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>defaultCommands</h2>
+
+<p>This plugin contains all of the default commands for the bot to be useful.</p>
+
+<p><strong>Commands</strong></p>
+
+<blockquote>
+<p><code>(prefix)about</code> - Prints bot version and a link to github</p>
+
+<p><code>(prefix)action &lt;action&gt;</code> <strong>[admin]</strong> - The same as doing /me , except it causes the bot to do the action </p>
+
+<p><code>(prefix)cycle</code> <strong>[admin]</strong> - Disconnects and reconnects to the channel. Good housekeeping</p>
+
+<p><code>(prefix)help</code> - Lists all commands from the enabled plugins</p>
+
+<p><code>(prefix)poweroff</code> <strong>[admin]</strong> - Causes bot to shut down and exit with a return code of 0</p>
+
+<p><code>(prefix)prefix &lt;new prefix&gt;</code> <strong>[admin]</strong> - Changes the command prefix to the parameter passed</p>
+
+<p><code>(prefix)say &lt;text&gt;</code> <strong>[admin]</strong> - Causes the bot to say the parameter passed</p>
+
+<p><code>(prefix)uptime</code> - Returns the bot's uptime in hours, minutes and seconds</p>
+
+<p><code>(prefix)version</code> - Does the same as <code>(prefix)about</code></p>
+
+<p><code>(prefix)restart</code> <strong>[admin]</strong> -Restarts the bot and reloads all config and plugins.</p>
+
+<p><code>(prefix)sc &lt;channel&gt;</code>  <strong>[admin]</strong> -Restarts the bot, opens up a second instance of the bot in the specified channel.</p>
+</blockquote>
+
+<p>Maintained by <strong>crazyman10123</strong> and <strong>jackwilsdon</strong></p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/crazyman10123/ircBotPHP/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/crazyman10123/ircBotPHP/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/crazyman10123/ircBotPHP"></a> is maintained by <a href="https://github.com/crazyman10123">crazyman10123</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
